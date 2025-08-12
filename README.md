@@ -132,13 +132,9 @@ curl -i -b cookies_bob.txt -H "Accept: application/json" http://localhost:3000/c
 * ActionCable is mounted at `/cable`
 * A frontend or WebSocket client can connect and subscribe to `ConversationsChannel` to receive live message updates.
 
----
+## Part 2
 
-awesome—here’s a paste-ready doc that hits every bullet in your brief. Drop it in your repo as `docs/technical_documentation.md`.
-
----
-
-# ChatFlow – Technical Documentation
+# Technical Documentation
 
 ## Architecture Overview
 
@@ -301,6 +297,7 @@ awesome—here’s a paste-ready doc that hits every bullet in your brief. Drop 
 
   * `GET  /conversations/:conversation_id/messages?before&after&limit`
   * `POST /conversations/:conversation_id/messages` – `{ body: "..." }`
+
 
 
 
