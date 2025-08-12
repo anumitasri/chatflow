@@ -27,7 +27,7 @@ ChatFlow is a Ruby on Rails 7 application that supports:
 ### 1.1 Clone the repository
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/anumitasri/chatflow.git
 cd chatflow
 ```
 
@@ -134,3 +134,4 @@ curl -i -b cookies_bob.txt -H "Accept: application/json" http://localhost:3000/c
 ## 5. Notes
 
 you may also run setup.sh that installs deps, prepares the DB, seeds two users + a conversation + messages (idempotently), and then prints copy-paste CLI commands to test the app.
+
