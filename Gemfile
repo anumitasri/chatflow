@@ -33,8 +33,9 @@ gem 'faker'
 gem 'shoulda-matchers'
 gem 'rubocop-rails'
 gem 'standardrb'
-
+gem "rack-cors"
 gem 'rswag'
+gem "bcrypt", "~> 3.1.7"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
@@ -63,3 +64,4 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
