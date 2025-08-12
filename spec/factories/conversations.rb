@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :conversation do
-    title { "MyString" }
-    group { false }
+    title { "Test Conversation" }
   end
 end

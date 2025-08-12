@@ -1,5 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Conversation, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "can have participants" do
+    conv = create(:conversation)
+    user = create(:user)
+    conv.participants << user
+    expect(conv.participants).to include(user)
+  end
 end

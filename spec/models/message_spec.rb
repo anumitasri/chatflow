@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Message, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "belongs to a conversation and user" do
+    message = create(:message)
+    expect(message.conversation).to be_a(Conversation)
+    expect(message.user).to be_a(User)
+  end
 end

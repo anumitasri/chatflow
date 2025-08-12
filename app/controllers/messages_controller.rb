@@ -61,6 +61,10 @@ class MessagesController < ApplicationController
   end
 
   private
+  def message_params
+    # Your specs send: params: { body: "hi" } as JSON
+    params.permit(:body)
+  end
 
   def load_conversation!
     @conversation = Conversation
