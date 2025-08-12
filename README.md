@@ -58,6 +58,9 @@ Message.create!(conversation: conv, user: u2, body: 'Hey Alice! Good to hear fro
 "
 ```
 
+You can also seed data manually:
+
+bin/rails db:seed
 ---
 
 ## 2. Running the Application
@@ -134,4 +137,5 @@ curl -i -b cookies_bob.txt -H "Accept: application/json" http://localhost:3000/c
 ## 5. Notes
 
 you may also run setup.sh that installs deps, prepares the DB, seeds two users + a conversation + messages (idempotently), and then prints copy-paste CLI commands to test the app.
+
 
