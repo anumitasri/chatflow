@@ -1,4 +1,25 @@
-<div>
-  <h1 class="font-bold text-4xl">Conversations#show</h1>
-  <p>Find me in app/views/conversations/show.html.erb</p>
+<h2 class="text-lg font-semibold mb-3">
+  <%= @conversation.title.presence || "Conversation ##{@conversation.id}" %>
+</h2>
+
+<div id="messages"
+     data-controller="chat"
+     data-chat-conversation-id-value="<%= @conversation.id %>"
+     class="bg-white border rounded p-3 h-96 overflow-y-auto mb-3 space-y-2">
+  <% @messages.each do |m| %>
+    <div class="<%= m.user_id == current_user.id ? 'text-right' : '' %>">
+      <span class="inline-block px-3 py-1 rounded bg-gray-100"><%= h m.body %></span>
+      <small class="text-gray-500"><%= m.created_at.strftime('%H:%M') %></small>
+    </div>
+  <% end %>
 </div>
+
+<form id="new_message"
+      action="<%= conversation_messages_path(@conversation) %>"
+      method="post"
+      data-action="submit->chat#send"
+      class="flex gap-2">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <input type="text" name="body" class="flex-1 border rounded px-2 py-2" placeholder="Type a message…">
+  <button class="px-4 py-2 rounded bg-blue-600 text-white">Send</button>
+</form>

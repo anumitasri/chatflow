@@ -1,5 +1,5 @@
-# app/controllers/messages_controller.rb
 class MessagesController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:create, :index]
   before_action :load_conversation!
 
   # GET /conversations/:conversation_id/messages

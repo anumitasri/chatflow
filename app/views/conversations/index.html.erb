@@ -1,4 +1,55 @@
-<div>
-  <h1 class="font-bold text-4xl">Conversations#index</h1>
-  <p>Find me in app/views/conversations/index.html.erb</p>
-</div>
+<h1 class="text-xl font-semibold mb-4">Your Conversations</h1>
+
+<% if @conversations.blank? %>
+  <p class="text-gray-600 mb-4">No conversations yet. Start one below.</p>
+<% else %>
+  <ul class="space-y-2 mb-6">
+    <% @conversations.each do |c| %>
+      <li class="bg-white border rounded p-3 flex items-center justify-between">
+        <div>
+          <div class="font-medium">
+            <%= link_to(c.group? ? (c.title.presence || "Group Chat") :
+                          c.users.where.not(id: current_user.id).first&.username || "Direct chat",
+                        conversation_path(c),
+                        class: "text-blue-600 underline") %>
+          </div>
+          <div class="text-xs text-gray-500">updated <%= time_ago_in_words(c.updated_at) %> ago</div>
+        </div>
+        <div class="text-xs text-gray-500">#<%= c.id %></div>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<h2 class="text-lg font-semibold mb-2">Start a new conversation</h2>
+<p class="text-sm text-gray-600 mb-2">Enter participant user IDs (comma-separated). Include at least one other person. 3+ makes a group chat.</p>
+
+<form id="new-conversation" action="<%= conversations_path %>" method="post" class="bg-white border rounded p-3 space-y-2">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <input type="text" name="participant_ids"
+         class="w-full border rounded px-2 py-1"
+         placeholder="e.g. 2,3">
+  <input type="text" name="title"
+         class="w-full border rounded px-2 py-1"
+         placeholder="Group title (optional)">
+  <button class="px-3 py-1 rounded bg-blue-600 text-white">Create</button>
+</form>
+
+<script>
+    // submit as JSON but keep it simple
+    document.getElementById("new-conversation")?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        const ids = form.participant_ids.value.split(",").map(s => s.trim()).filter(Boolean).map(Number);
+        const title = form.title.value.trim();
+        const resp = await fetch(form.action, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-Token": form.querySelector('input[name="authenticity_token"]').value
+            },
+            body: JSON.stringify({ participant_ids: ids, title })
+        });
+        if (resp.ok) { window.location.reload(); } else { alert("Failed to create"); }
+    });
+</script>

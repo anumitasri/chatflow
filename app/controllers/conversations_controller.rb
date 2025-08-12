@@ -1,4 +1,5 @@
 class ConversationsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:create]
   # List all conversations for current user (most recent first)
   def index
     @conversations = Conversation
@@ -46,8 +47,9 @@ class ConversationsController < ApplicationController
     # always include current_user
     all_ids = (participant_ids + [current_user.id]).uniq
     is_group = all_ids.size >= 3
-    if all_ids.size < 2
-      return render json: { error: "Need at least 2 participants" }, status: :unprocessable_entity
+
+    if is_group && all_ids.size < 3
+      return render json: { error: "Group chats require 3+ participants" }, status: :unprocessable_entity
     end
 
     title = is_group ? (params[:title].presence || "Group Chat") : nil

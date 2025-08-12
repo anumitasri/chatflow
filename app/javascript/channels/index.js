@@ -1,2 +1,4 @@
-// Import all the channels to be used by Action Cable
-import "channels/conversations_channel"
+import { Application } from "@hotwired/stimulus"
+const application = Application.start()
+import ChatController from "./chat_controller"
+application.register("chat", ChatController)
